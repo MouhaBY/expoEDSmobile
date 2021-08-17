@@ -23,9 +23,9 @@ class Home extends React.Component{
             <View style={styles.mainContainer}>
                 <View style={styles.userBar}>
                     <View style={styles.userData}>
-                        <Text style={styles.text_container}>{ "Contact : "+ this.props.userData.fullName }</Text>
-                        <Text style={styles.text_container}>{ "Nom d'utilisateur : "+ this.props.userData.username }</Text>
-                        <Text style={styles.text_container}>{ "Profil : "+ this.props.userData.profile }</Text>
+                        <Text style={styles.text_container}>{ "Contact : "+ this.props.userData.FullName }</Text>
+                        <Text style={styles.text_container}>{ "Nom d'utilisateur : "+ this.props.userData.Username }</Text>
+                        <Text style={styles.text_container}>{ "Profil : "+ this.props.userData.Roles }</Text>
                         <Text style={styles.text_container}>{ "Agence : "+ this.props.userData.StoreName }</Text>
                     </View>
                     <TouchableOpacity style={styles.logoutButton_container} onPress={()=> this.logout()}>

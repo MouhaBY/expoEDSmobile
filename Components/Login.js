@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import store from '../Redux/configureStore';
 import {SUBMIT} from '../Redux/Reducers/configurationReducer';
 import {LOGIN, LOGOUT} from '../Redux/Reducers/authenticationReducer';
+import {loginAPI} from '../WS/API'
 
 
 class Login extends React.Component{
@@ -42,23 +43,22 @@ class Login extends React.Component{
 
     login = () => {
         if (this.state.username !== "" && this.state.password !== "") {
-            let user_found = {fullName:"Mohammed BEN YAHIA", username:"123", password:"123", profile:"Livreur", StoreName:"Ag Sousse Sud"};
-            if (this.state.username === user_found.username){
-                if (this.state.password === user_found.password) {
-                    const action = { type: LOGIN, value: user_found };
-                    this.props.dispatch(action);
+            loginAPI(this.state.username, this.state.password)
+            .then((result)=>{
+                const action = { type: LOGIN, value: result.userData }
+                this.props.dispatch(action)
+            })
+            .catch((error)=>{
+                const errorMessage = error.error
+                if (errorMessage){
+                    this.setState({connectMessage:errorMessage})
                 }
                 else{
-                    this.setState({connectMessage:'Mot de passe erroné'});
-                    const action = { type: LOGOUT, value: {} };
-                    this.props.dispatch(action);
+                    this.setState({connectMessage:'Connexion au serveur échouée'})
                 }
-            }
-            else{
-                this.setState({connectMessage:'Utilisateur introuvable'});
-                const action = { type: LOGOUT, value: {} };
-                this.props.dispatch(action);
-            }    
+                const action = { type: LOGOUT, value: {} }
+                this.props.dispatch(action)
+            })
         }
     }
 
